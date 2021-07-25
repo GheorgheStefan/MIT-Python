@@ -139,7 +139,68 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    pass
+    print('Welcome to the game Hangman!')
+    print("I am thinking of a word that is" ,len(secret_word),"letters long")
+    
+    num_of_guesses = 6
+    num_of_warnings = 3
+    letters_guessed = []
+    
+    print("You have", num_of_warnings, "warnings left")
+    print('-------------')
+    
+    while True:
+        print("You have",num_of_guesses, "guesses left")
+        print("Available letters:", get_available_letters(letters_guessed))
+    
+        letter_guessed = input('Please enter a letter: ')
+        guessed_word = get_guessed_word(secret_word, letters_guessed)
+        
+        if letter_guessed.isalpha():
+            if letter_guessed not in letters_guessed:   
+                letters_guessed.append(letter_guessed)
+                guessed_word = get_guessed_word(secret_word, letters_guessed)
+                
+                if letter_guessed in secret_word:
+                    print('Good guess: {}'.format(guessed_word))
+                else:
+                    if letter_guessed in 'aeiou':
+                        num_of_guesses -= 2
+                    else:
+                        num_of_guesses -= 1  
+                    print("Oops! That letter is not in my word:", guessed_word)
+            else:
+                if num_of_warnings > 0:
+                    num_of_warnings -= 1
+                    print("Oops! You\'ve already guessed that letter. You now have"  ,num_of_warnings, "warnings:", guessed_word)
+                else:
+                    num_of_guesses -= 1
+                    print("Oops! You\'ve already guessed that letter. You now have no warnings left so you lose one guess:", guessed_word)
+
+        else:
+            if num_of_warnings > 0:
+                num_of_warnings -= 1
+                print("Oops! That is not a valid letter. You have ", num_of_warnings, " warnings left:",guessed_word)
+            else:
+                num_of_guesses -= 1
+                print("Oops! You\'ve already guessed that letter. You now have no warnings left so you lose one guess:", guessed_word)
+    
+        print('-------------')
+    
+        if is_word_guessed(secret_word, letters_guessed):
+            unique_letters_in_secret_word = []
+            for char in secret_word:
+                if char not in unique_letters_in_secret_word:
+                    unique_letters_in_secret_word.append(char)
+            
+            print('Congratulations, you won!')
+            print("Your total score for this game is ",num_of_guesses * len(unique_letters_in_secret_word))
+            break
+    
+        if num_of_guesses <= 0:
+            print("Sorry, you ran out of guesses. The word was ", secret_word)
+            break
+
 
 
 
@@ -164,7 +225,30 @@ def match_with_gaps(my_word, other_word):
         False otherwise: 
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    my_word_with_no_spaces = ''
+    letters_guessed = []
+    for char in my_word:
+        if char != ' ':
+            my_word_with_no_spaces += char
+            
+        if char.isalpha():
+            letters_guessed.append(char)
+        
+    if len(my_word_with_no_spaces.strip()) != len(other_word.strip()):
+        return False
+    
+    for i in range(len(my_word_with_no_spaces)):
+        current_letter =  my_word_with_no_spaces[i]
+        other_letter = other_word[i]
+        if current_letter.isalpha():
+            has_same_letter = current_letter == other_letter
+            if not has_same_letter:
+                return False
+        else:
+            if current_letter == '_' and other_letter in letters_guessed:
+                return False
+            
+    return True
 
 
 
@@ -179,7 +263,17 @@ def show_possible_matches(my_word):
 
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    matched_words = []
+    for word in wordlist:
+        if match_with_gaps(my_word, word):
+            matched_words.append(word)
+    
+    if len(matched_words) > 0:
+        for word in matched_words:
+            print(word, end=' ')
+        print()
+    else:
+        print('No matches found')
 
 
 
