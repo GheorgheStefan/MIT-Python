@@ -94,7 +94,7 @@ class SubMessage(object):
     def build_transpose_dict(self, vowels_permutation):
         '''
         vowels_permutation (string): a string containing a permutation of vowels (a, e, i, o, u)
-        
+
         Creates a dictionary that can be used to apply a cipher to a letter.
         The dictionary maps every uppercase and lowercase letter to an
         uppercase and lowercase letter, respectively. Vowels are shuffled 
@@ -112,16 +112,14 @@ class SubMessage(object):
                  another letter (string). 
         '''
         dict = {}
-        all_vowels = VOWELS_LOWER
-        all_vowels += VOWELS_UPPER
-        vowels_permutation = get_permutations(all_vowels)
-        for letter in string.ascii_letters:
-            if letter in vo
-      
-         
+        for i in range(0, len(vowels_permutation)):
+            dict[VOWELS_LOWER[i]] = vowels_permutation[i]
+            dict[VOWELS_LOWER[i].upper()] = vowels_permutation[i].upper()
+        for i in range(0, len(CONSONANTS_LOWER)):
+            dict[CONSONANTS_LOWER[i]] = CONSONANTS_LOWER[i]
+            dict[CONSONANTS_LOWER[i].upper] = CONSONANTS_LOWER[i].upper() 
 
-
-        pass #delete this line and replace with your code here
+        return dict #delete this line and replace with your code here
     
     def apply_transpose(self, transpose_dict):
         '''
@@ -130,8 +128,15 @@ class SubMessage(object):
         Returns: an encrypted version of the message text, based 
         on the dictionary
         '''
+        new_message = ""
+        for letter in self.message_text:
+            if letter in string.ascii_letters:
+                new_message += transpose_dict[letter]
+
+        return new_message
+
         
-        pass #delete this line and replace with your code here
+        #delete this line and replace with your code here
         
 class EncryptedSubMessage(SubMessage):
     def __init__(self, text):
@@ -144,7 +149,7 @@ class EncryptedSubMessage(SubMessage):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        return SubMessage.__init__(self, text) #delete this line and replace with your code here
 
     def decrypt_message(self):
         '''
