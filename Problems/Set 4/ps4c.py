@@ -131,7 +131,9 @@ class SubMessage(object):
         new_message = ""
         for letter in self.message_text:
             if letter in string.ascii_letters:
-                new_message += transpose_dict[letter]
+                letter = transpose_dict[letter]
+
+        new_message += letter
 
         return new_message
 
@@ -169,7 +171,8 @@ class EncryptedSubMessage(SubMessage):
         
         Hint: use your function from Part 4A
         '''
-        pass #delete this line and replace with your code here
+        
+        #delete this line and replace with your code here
     
 
 if __name__ == '__main__':
