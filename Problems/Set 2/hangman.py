@@ -80,19 +80,14 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    printed_word = ' '
+    printed_word = ""
     for x in range(0, len(secret_word)):
 
       letter = secret_word[x]
-
-      if letter not in letters_guessed:
-
-        printed_word = printed_word + '_'
-
-      else:
-
+      if letter in letters_guessed:
         printed_word = printed_word + letter
-
+      else:
+        printed_word = printed_word + '_'
     return printed_word
 
 
@@ -104,7 +99,7 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-    available_letters = ''
+    available_letters = ""
     for x in range (0,len(string.ascii_lowercase)):
       #letter = string.ascii_lowercase[x]
       if string.ascii_lowercase[x] not in letters_guessed:
@@ -149,7 +144,7 @@ def hangman(secret_word):
     print("You have", num_of_warnings, "warnings left")
     print('-------------')
     
-    while True:
+    while 1:
         print("You have",num_of_guesses, "guesses left")
         print("Available letters:", get_available_letters(letters_guessed))
     
@@ -162,7 +157,7 @@ def hangman(secret_word):
                 guessed_word = get_guessed_word(secret_word, letters_guessed)
                 
                 if letter_guessed in secret_word:
-                    print('Good guess: {}'.format(guessed_word))
+                    print("Good guess: ",guessed_word)
                 else:
                     if letter_guessed in 'aeiou':
                         num_of_guesses -= 2
@@ -189,9 +184,9 @@ def hangman(secret_word):
     
         if is_word_guessed(secret_word, letters_guessed):
             unique_letters_in_secret_word = []
-            for char in secret_word:
-                if char not in unique_letters_in_secret_word:
-                    unique_letters_in_secret_word.append(char)
+            for x in range(0, len(secret_word)): 
+                if secret_word[x] not in unique_letters_in_secret_word:
+                    unique_letters_in_secret_word.append(secret_word[x])
             
             print('Congratulations, you won!')
             print("Your total score for this game is ",num_of_guesses * len(unique_letters_in_secret_word))
@@ -224,34 +219,8 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    my_word_with_no_spaces = ''
-    letters_guessed = []
-    for char in my_word:
-        if char != ' ':
-            my_word_with_no_spaces += char
-            
-        if char.isalpha():
-            letters_guessed.append(char)
-        
-    if len(my_word_with_no_spaces.strip()) != len(other_word.strip()):
-        return False
-    
-    for i in range(len(my_word_with_no_spaces)):
-        current_letter =  my_word_with_no_spaces[i]
-        other_letter = other_word[i]
-        if current_letter.isalpha():
-            has_same_letter = current_letter == other_letter
-            if not has_same_letter:
-                return False
-        else:
-            if current_letter == '_' and other_letter in letters_guessed:
-                return False
-            
-    return True
-
-
-
+    pass# FILL IN YOUR CODE HERE AND DELETE "pass"
+ 
 def show_possible_matches(my_word):
     '''
     my_word: string with _ characters, current guess of secret word
@@ -262,18 +231,8 @@ def show_possible_matches(my_word):
              that has already been revealed.
 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    matched_words = []
-    for word in wordlist:
-        if match_with_gaps(my_word, word):
-            matched_words.append(word)
-    
-    if len(matched_words) > 0:
-        for word in matched_words:
-            print(word, end=' ')
-        print()
-    else:
-        print('No matches found')
+    pass# FILL IN YOUR CODE HERE AND DELETE "pass"
+
 
 
 
@@ -331,9 +290,3 @@ if __name__ == "__main__":
     
     #secret_word = choose_word(wordlist)
     #hangman_with_hints(secret_word)
-    
-letters_guessed = ['e', 'i', 'k', 'p', 'r', 's'] 
-print(get_available_letters(letters_guessed)) 
-
-
-
